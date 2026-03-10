@@ -3,23 +3,92 @@
 
 <head>
   <meta charset="utf-8">
-  <title>CS208 - Starter Code (UPDATE ME)!</title>
+  <title>CS208 Lab 9.03</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1>HTML Rocks!!</h1>
-  <ul>
-  <li><a href="/hello">Click here to say hello</a></li>
-  <li><button id="hello-link">Click Me!</button></li>
-  <li><button id="joke-button">Dad Joke!</button></li>
-  <script src="script.js"></script>
-  </ul>
-  <img src="funny.png" alt="Funny Image" width="300" height="200">
+  <h1>Starting Lineup</h1>
+  <form id="form">
 
-  <h2 id="joke-display"></h2>
+    <!-- Status Radio Field -->
+    <p>
+      <fieldset>
+        <legend>Status:</legend>
+
+        <label><input type="radio" name="status" value="Draft">Draft</label>
+        <label><input type="radio" name="status" value="Final" checked>Final</label>
+      </fieldset>
+    </p>
+
+    <!-- Date Dropdown Field -->
+    <p>
+      <label for="gameDate">Date:</label>
+
+      <select name="gameDate">
+        <option value="March 20" name="date">March 20</option>
+        <option value="March 24" name="date">March 24</option>
+        <option value="April 2" name="date">April 2</option>
+        <option value="April 6" name="date">April 6</option>
+        <option value="April 13" name="date">April 13</option>
+      </select>
+    </p>
+
+    <!-- Players Checkbox Field -->
+    <p>
+      <fieldset>
+        <legend>Players:</legend>
+
+        <label><input type="checkbox" value="Aarav Agarwal" name="players">Aarav Agarwal</label><br>
+        <label><input type="checkbox" value="Ava Johnson" name="players">Ava Johnson</label><br>
+        <label><input type="checkbox" value="Julio Ortiz" name="players">Julio Ortiz</label><br>
+        <label><input type="checkbox" value="Liam Rubio" name="players">Liam Rubio</label><br>
+        <label><input type="checkbox" value="Emma Witherspoon" name="players">Emma Witherspoon</label>
+      </fieldset>
+    </p>
+
+    <!-- Submit Button -->
+    <p>
+      <input type="submit" value="Submit" id="submit">
+    </p>
+
+  </form>
+
+  <!-- Display User's Selection Here -->
+  <p id="result-area"></p>
+
 </body>
+
+<script>
+  const form = document.getElementById('form');
+  form.addEventListener('submit', (event) => myLineUp(event));
+  const userSelection = document.getElementById('result-area');
+
+  function myLineUp(e) {
+    e.preventDefault(); // stop the page from reloading and doing default stuff
+
+    const formData = new FormData(form); // get all of the input results as variables
+    const status = formData.get('status');
+    const date = formData.get('gameDate');
+    const checkboxes = document.getElementsByName('players');
+
+    // save the results as a string to be printed to the console and added to the page
+    let result = "Status: " + status + "\nDate: " + date + "\nPlayers: ";
+    // add all checked player boxes to the results
+    for (let i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        result += "\n" + checkboxes[i].value;
+      }
+    }
+
+    // output result
+    console.log(result);
+    let htmlResult = result.replaceAll("\n", "<br>"); // replace newline characters to show on the page
+    userSelection.innerHTML = htmlResult;
+  }
+
+</script>
 
 </html>
